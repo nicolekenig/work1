@@ -1,4 +1,5 @@
-class NOT:
+class bitwiseInverter:
+    # Inverter is NOT gate
     in1 = 0
     output = 0
 
@@ -6,9 +7,4 @@ class NOT:
         self.in1 = in1
 
     def get_output(self):
-        if self.in1 == 0:
-            return 1
-        else:
-            return 0
-
-
+        return ~self.in1

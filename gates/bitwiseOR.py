@@ -1,4 +1,4 @@
-class NAND:
+class bitwiseOR:
     in1 = 0
     in2 = 0
     output = 0
@@ -8,9 +8,6 @@ class NAND:
         self.in2 = in2
 
     def get_output(self):
-        if self.in1 == 1 and self.in2 == 1:
-            return 0  # False
-        else:
-            return 1  # True
+        return self.in1 | self.in2
 
 

@@ -1,4 +1,4 @@
-class OR:
+class bitwiseNOR:
     in1 = 0
     in2 = 0
     output = 0
@@ -8,9 +8,6 @@ class OR:
         self.in2 = in2
 
     def get_output(self):
-        if self.in1 != self.in2:
-            return 1  # True
-        else:
-            return 0  # False
+        return ~(self.in1 | self.in2)
 
 
