@@ -1,4 +1,4 @@
-class bitwiseInverter:
+class multibitInverter:
     # Inverter is NOT gate
     in1 = 0
     output = 0
@@ -7,4 +7,4 @@ class bitwiseInverter:
         self.in1 = in1
 
     def get_output(self):
-        return ~self.in1
+        return ~ self.in1

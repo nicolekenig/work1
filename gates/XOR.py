@@ -1,4 +1,4 @@
-class bitwiseAND:
+class XOR:
     in1 = 0
     in2 = 0
     output = 0
@@ -8,6 +8,6 @@ class bitwiseAND:
         self.in2 = in2
 
     def get_output(self):
-        return self.in1 & self.in2
-
-    ß
+        if self.in1 != self.in2:
+            return 1  # True
+        return 0  # False

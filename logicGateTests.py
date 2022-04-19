@@ -1,63 +1,62 @@
-from logicGate import *
+from gates.INVERTER import *
+from gates.multibitAND import *
+from gates.multibitNAND import *
+from gates.multibitNOR import *
+from gates.multibitOR import *
+from gates.multibitXOR import *
 
 if __name__ == '__main__':
-    print(AND(1, 1))
+    # ------------ AND TEST ------------
+    # print('------------ AND TEST ------------')
+    # test_multi_and = multibitAND([0,0,0],'test_and4' )
+    # print(test_multi_and.get_output())
 
-    print("+---------------+----------------+")
-    print(" | AND Truth Table | Result |")
-    print(" A = False, B = False | A AND B =", AND(False, False), " | ")
-    print(" A = False, B = True | A AND B =", AND(False, True), " | ")
-    print(" A = True, B = False | A AND B =", AND(True, False), " | ")
-    print(" A = True, B = True | A AND B =", AND(True, True), " | ")
+    # ------------ INVERTER (NOT) TEST ------------
+    # print('------------ INVERTER (NOT) TEST ------------')
+    # test_not = INVERTER(0,'test_not')
+    # print(test_not.get_output())
 
-    print(NAND(1, 0))
+    # ------------ NAND TEST ------------
+    # print('------------ NAND TEST ------------')
+    # test_multi_nand = multibitNAND([0,0,0], 'test_nand')
+    # print(test_multi_nand.get_output())
 
-    print("+---------------+----------------+")
-    print(" | NAND Truth Table | Result |")
-    print(" A = False, B = False | A AND B =", NAND(False, False), " | ")
-    print(" A = False, B = True | A AND B =", NAND(False, True), " | ")
-    print(" A = True, B = False | A AND B =", NAND(True, False), " | ")
-    print(" A = True, B = True | A AND B =", NAND(True, True), " | ")
+    # ------------ OR TEST ------------
+    # print('------------ OR TEST ------------')
+    # test_multi_or = multibitOR([1,1,1],'test_or')
+    # print(test_multi_or.get_output())
 
-    print(OR(0, 0))
+    # ------------ NOR TEST ------------
+    # print('------------ NOR TEST ------------')
+    # test_multi_nor = multibitNOR([1,1,1],'test_nor')
+    # print(test_multi_nor.get_output())
 
-    print("+---------------+----------------+")
-    print(" | OR Truth Table | Result |")
-    print(" A = False, B = False | A OR B =", OR(False, False), " | ")
-    print(" A = False, B = True | A OR B =", OR(False, True), " | ")
-    print(" A = True, B = False | A OR B =", OR(True, False), " | ")
-    print(" A = True, B = True | A OR B =", OR(True, True), " | ")
+    # ------------ XOR TEST ------------
+    print('------------ XOR TEST ------------')
+    test_multi_xor = multibitXOR([0,0,0], 'test_xor')
+    print("in:[0,0,0]  out:0", test_multi_xor.get_output() == 0)
+    print()
+    test_multi_xor = multibitXOR([0, 0, 1], 'test_xor')
+    print("in:[0,0,1]  out:1", test_multi_xor.get_output() == 1)
+    print()
+    test_multi_xor = multibitXOR([0, 1, 0], 'test_xor')
+    print("in:[0,1,0]  out:1", test_multi_xor.get_output() == 1)
+    print()
+    test_multi_xor = multibitXOR([0, 1, 1], 'test_xor')
+    print("in:[0,1,1]  out:0", test_multi_xor.get_output() == 0)
+    print()
+    test_multi_xor = multibitXOR([1, 0, 0], 'test_xor')
+    print("in:[1,0,0]  out:1", test_multi_xor.get_output() == 1)
+    print()
+    test_multi_xor = multibitXOR([1, 0, 1], 'test_xor')
+    print("in:[1,0,1]  out:0", test_multi_xor.get_output() == 0)
+    print()
+    test_multi_xor = multibitXOR([1, 1, 0], 'test_xor')
+    print("in:[1,1,0]  out:0", test_multi_xor.get_output() == 0)
+    print()
+    test_multi_xor = multibitXOR([1, 1, 1], 'test_xor')
+    print("in:[1,1,1]  out:1", test_multi_xor.get_output() == 1)
+    print()
 
-    print(XOR(5, 5))
 
-    print("+---------------+----------------+")
-    print(" | XOR Truth Table | Result |")
-    print(" A = False, B = False | A XOR B =", XOR(False, False), " | ")
-    print(" A = False, B = True | A XOR B =", XOR(False, True), " | ")
-    print(" A = True, B = False | A XOR B =", XOR(True, False), " | ")
-    print(" A = True, B = True | A XOR B =", XOR(True, True), " | ")
 
-    print(NOT(0))
-
-    print("+---------------+----------------+")
-    print(" | NOT Truth Table | Result |")
-    print(" A = False | A NOT =", NOT(False), " | ")
-    print(" A = True, | A NOT =", NOT(True), " | ")
-
-    print(NOR(0, 0))
-
-    print("+---------------+----------------+")
-    print(" | NOR Truth Table | Result |")
-    print(" A = False, B = False | A NOR B =", NOR(False, False), " | ")
-    print(" A = False, B = True | A NOR B =", NOR(False, True), " | ")
-    print(" A = True, B = False | A NOR B =", NOR(True, False), " | ")
-    print(" A = True, B = True | A NOR B =", NOR(True, True), " | ")
-
-    print(XNOR(1, 1))
-
-    print("+---------------+----------------+")
-    print(" | XNOR Truth Table | Result |")
-    print(" A = False, B = False | A XNOR B =", XNOR(False, False), " | ")
-    print(" A = False, B = True | A XNOR B =", XNOR(False, True), " | ")
-    print(" A = True, B = False | A XNOR B =", XNOR(True, False), " | ")
-    print(" A = True, B = True | A XNOR B =", XNOR(True, True), " | ")

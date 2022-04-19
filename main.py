@@ -1,16 +1,67 @@
-# This is a sample Python script.
+import os
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from dataSystem import dataSystem
+
+PATH_DATA_SYS = 'data_for_exercises/circuits/Data_Systems'
+PATH_DATA_OBS = 'data_for_exercises/circuits/Data_Observations'
+SYS1 = ''
+systems = {}
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def read_data_system_files(name_prefix):
+    files = os.listdir(PATH_DATA_SYS)
+    for file_name in files:
+        if file_name.startswith(name_prefix):
+            f = open(PATH_DATA_SYS + '/' + file_name)
+            sys_id = f.readline().replace('.', '')
+            sys_id = sys_id.replace('\n', '')
+            sys_i = f.readline()
+            sys_i = convert_string_to_arr(sys_i)
+            sys_o = f.readline()
+            sys_o = convert_string_to_arr(sys_o)
+            systems[name_prefix] = dataSystem(sys_id, sys_i, sys_o, f)
 
 
-# Press the green button in the gutter to run the script.
+def read_data_observation_files(name_prefix):
+    files = os.listdir(PATH_DATA_OBS)
+    for file_name in files:
+        if file_name.startswith(name_prefix):
+            f = open(PATH_DATA_OBS + '/' + file_name)
+            for line in f:
+                line = convert_string_to_arr(line)
+                sys_id = line[0]
+                obs_num = line[1]
+                in_and_out_obs = line[2:]
+                systems[sys_id].run(in_and_out_obs)
+                ans = systems[sys_id].compare_output_to_obs_output()
+                print("-------------- result of ", sys_id, " --------------")
+                print("Observation num ", obs_num, " - ", ans)
+
+
+def convert_string_to_arr(s):
+    s = s.replace('[', '')
+    s = s.replace(']', '')
+    s = s.replace('.', '')
+    s = s.replace(')', '')
+    s = s.replace('(', '')
+    s = s.split(',')
+    s[-1] = s[-1].replace('\n', '')
+    return s
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # print("*********** system c17 ***********")
+    # read_data_system_files('c17')
+    # read_data_observation_files('c17')
+    # print()
+    # print("*********** system 74181 ***********")
+    # read_data_system_files('74181')
+    # read_data_observation_files('74181')
+    # print()
+    # print("*********** system 74182 ***********")
+    # read_data_system_files('74182')
+    # read_data_observation_files('74182')
+    # print()
+    print("*********** system 74283 ***********")
+    read_data_system_files('74283')
+    read_data_observation_files('74283')
+    print()
