@@ -15,12 +15,14 @@ class dataSystem:
     :parameter sys_o: dict of the calculated output we did
     :parameter sys_gate_outputs_dict: dict of each gate in the system. the key is the gate output name (e.g z1/o1) and the
     value is an array of [array of the gate inputs, the gate object ifself, the gate output]
+    :parameter sys_comps_dict: dict of the system components
     :parameter obs_output: dict of the observation output as we read in the observation file
     '''
     sys_id = ''
     sys_i = {}  # key: i1 , val : i1 value
     sys_o = {}  # key : o1, val : o1 value
     sys_gate_outputs_dict = {}  # key: gate_output (e.g z1) , val: (inputs, actual_gate)
+    sys_comps_dict = {}  # key: gate_name,   val: gate_output_name
     obs_output = {}
     compare_outs = {}
 
@@ -50,6 +52,7 @@ class dataSystem:
             gate_inputs = line[3:]
             input_to_send = self.input_value(gate_inputs)
             gate = None
+            self.sys_comps_dict[gate_name] = gate_output_name
             if gate_type == 'and':
                 gate = multibitAND(inputs=input_to_send, gate_name=gate_name)
             elif gate_type == 'nand':
@@ -110,7 +113,7 @@ class dataSystem:
                     self.sys_i[obs[1:]] = 0
                 else:
                     self.sys_i[obs] = 1
-            if 'o' in obs:
+            elif 'o' in obs:
                 if obs.startswith('-'):
                     self.obs_output[obs[1:]] = 0
                 else:
@@ -136,18 +139,51 @@ class dataSystem:
         self.initialize_sys_dict(obs_arr)
         self.build_obs(obs_arr)
         for out in self.sys_gate_outputs_dict.keys():
-            inputs = self.input_value(self.sys_gate_outputs_dict[out][0])
-            (self.sys_gate_outputs_dict[out][1]).set_inputs(inputs)
-            update_output = (self.sys_gate_outputs_dict[out][1]).get_output()
-            self.sys_gate_outputs_dict[out][2] = update_output
+            # inputs = self.input_value(self.sys_gate_outputs_dict[out][0])
+            # (self.sys_gate_outputs_dict[out][1]).set_inputs(inputs)
+            # update_output = (self.sys_gate_outputs_dict[out][1]).get_output()
+            # self.sys_gate_outputs_dict[out][2] = update_output
+            self.bubbling(out)
 
         for out in self.sys_o.keys():
             self.sys_o[out] = self.sys_gate_outputs_dict[out][2]
+
+    def run_diagnosis(self, node_output_gate):
+        for out in self.sys_gate_outputs_dict.keys():
+            # out is the node we check
+            if out not in node_output_gate:
+                self.bubbling(out)
+            else:
+                if self.sys_gate_outputs_dict[out][2] == 0:
+                    self.sys_gate_outputs_dict[out][2] = 1
+                else:
+                    self.sys_gate_outputs_dict[out][2] = 0
+
+        as_obs = []
+        for out in self.sys_o.keys():
+            self.sys_o[out] = self.sys_gate_outputs_dict[out][2]
+            is_as_obs = self.sys_o[out] == self.obs_output[out]
+            as_obs.append(is_as_obs)
+
+        if False in as_obs:
+            return False
+        else:
+            return True
+
+    def bubbling(self, out):
+        inputs = self.input_value(self.sys_gate_outputs_dict[out][0])
+        (self.sys_gate_outputs_dict[out][1]).set_inputs(inputs)
+        update_output = (self.sys_gate_outputs_dict[out][1]).get_output()
+        self.sys_gate_outputs_dict[out][2] = update_output
 
     def get_sys_output(self):
         return self.sys_o
 
     def compare_output_to_obs_output(self):
         for out in self.sys_o:
-            self.compare_outs[out] = ["sys out 1: ", self.sys_o[out], " obs out 1: ", self.obs_output[out], " result: ", self.sys_o[out] == self.obs_output[out]]
+            self.compare_outs[out] = ["sys out: ", self.sys_o[out], " obs out: ", self.obs_output[out], " result: ",
+                                      self.sys_o[out] == self.obs_output[out]]
         return self.compare_outs
+
+    def get_sys_comps_dict(self):
+        return self.sys_comps_dict
