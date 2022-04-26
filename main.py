@@ -39,8 +39,8 @@ def read_data_observation_files(name_prefix):
                 diagnos.set_obs_dict(obs_num, ans)
                 diagnosis_ans = diagnos.run_bfs(systems[sys_id], systems[sys_id].get_sys_comps_dict())
                 # print("Observation num ", obs_num, " - ", ans)
-                print("diagnosis_ans: ", diagnosis_ans)
-            diagnos.print_obs()
+                print("Observation num ",obs_num, "diagnosis_ans: ", diagnosis_ans)
+            # diagnos.print_obs()
 
 def convert_string_to_arr(s):
     s = s.replace('[', '')
@@ -54,9 +54,9 @@ def convert_string_to_arr(s):
 
 if __name__ == '__main__':
     print("*********** system c17 ***********")
-    read_data_system_files('c17')
-    read_data_observation_files('c17')
-    print()
+    # read_data_system_files('c17')
+    # read_data_observation_files('c17')
+    # print()
     # print("*********** system 74181 ***********")
     # read_data_system_files('74181')
     # read_data_observation_files('74181')
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     # read_data_system_files('74182')
     # read_data_observation_files('74182')
     # print()
-    # print("*********** system 74283 ***********")
-    # read_data_system_files('74283')
-    # read_data_observation_files('74283')
-    # print()
+    print("*********** system 74283 ***********")
+    read_data_system_files('74283')
+    read_data_observation_files('74283')
+    print()

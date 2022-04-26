@@ -165,10 +165,19 @@ class dataSystem:
             is_as_obs = self.sys_o[out] == self.obs_output[out]
             as_obs.append(is_as_obs)
 
+        for out in self.sys_gate_outputs_dict.keys():
+            # out is the node we check
+            if out in node_output_gate:
+                if self.sys_gate_outputs_dict[out][2] == 0:
+                    self.sys_gate_outputs_dict[out][2] = 1
+                else:
+                    self.sys_gate_outputs_dict[out][2] = 0
+
+
         if False in as_obs:
-            return False
-        else:
             return True
+        else:
+            return False
 
     def bubbling(self, out):
         inputs = self.input_value(self.sys_gate_outputs_dict[out][0])
