@@ -1,3 +1,6 @@
+from func_timeout import func_set_timeout
+import time
+
 class diagnosis:
     sys_id = ''
     obs_dict = {}  # key: obs_num, val: obs
@@ -18,15 +21,14 @@ class diagnosis:
         visited = []
         queue = []
         diagnosis = []
-        node = list_of_gates
         diagnosis = self.bfs(list_of_gates, graph, visited, queue, diagnosis, data_sys)
         return diagnosis
 
     def bfs(self, list_of_gates, graph, visited, queue, diagnosis, data_sys):
-        visited.append(list_of_gates[0])
+        # visited.append(list_of_gates[0])
         for node in list_of_gates:
             queue.append([node])
-
+        end_time = time.time() + 120
         while queue:
             s = queue.pop(0)
             node_outputs_gate = self.get_output_gates(s, data_sys)
@@ -43,32 +45,14 @@ class diagnosis:
                         queue.remove(q)
 
             if is_healthy:
-                index = list_of_gates.index(s[0])
-                for i in range(index+1,len(list_of_gates)):
-                    gate = list_of_gates[i]
-                    if gate not in visited:
+                for gate in list_of_gates:
+                    if gate not in s:
                         node_to_add = s + [gate]
-                        visited.append(gate)
+                        # visited.append(node_to_add)
                         queue.append(node_to_add)
-            # for gate in list_of_gates:
-            #     if gate is in s and is_healthy:
-            #
-            #     if (gate not in s) and (gate not in visited):
-            #         if not is_healthy:
-            #             if gate is list_of_gates:
-            #                 tmp = gate
-            #             else:
-            #                 if (gate is list and s not in gate) or (gate is not list):
-            #                     tmp = [gate]
-            #                     tmp = tmp + s
-            #                     node_to_add = tmp
-            #                     tmp = None
-            #         else:
-            #             node_to_add = gate
-            #         # graph[node_to_add] = []
-            #         visited.append(gate)
-            #         queue.append(node_to_add)
-
+            curr_time = time.time()
+            if curr_time > end_time:
+                break
         return diagnosis
 
     def get_output_gates(self, nodes, data_sys):
