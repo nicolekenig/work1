@@ -55,26 +55,26 @@ def read_data_observation_files(name_prefix):
                 diagnosis_ans = diagnos.run_bfs(systems[sys_id], systems[sys_id].get_sys_comps_dict())
                 end_time = time.time()
                 # without timeout
-                ans_dict['System Name'][line_num] = sys_id
-                ans_dict['Observation no.'][line_num] = obs_num
-                ans_dict['Number of Diagnoses'][line_num] = len(diagnosis_ans)
-                ans_dict[ 'Minimal Cardinality'][line_num] =  len(diagnosis_ans[0])
-                ans_dict['Maximal Cardinality'][line_num] = '--'
-                ans_dict['Runtim e (ms)'][line_num] = end_time-start_time
-                line_num += 1
-                # with timeout
                 # ans_dict['System Name'][line_num] = sys_id
                 # ans_dict['Observation no.'][line_num] = obs_num
                 # ans_dict['Number of Diagnoses'][line_num] = len(diagnosis_ans)
-                # ans_dict['Minimal Cardinality'][line_num] = len(diagnosis_ans[0])
-                # ans_dict['Maximal Cardinality'][line_num] = len(diagnosis_ans[-1])
-                # ans_dict['Runtim e (ms)'][line_num] = '--'
+                # ans_dict[ 'Minimal Cardinality'][line_num] =  len(diagnosis_ans[0])
+                # ans_dict['Maximal Cardinality'][line_num] = '--'
+                # ans_dict['Runtim e (ms)'][line_num] = end_time-start_time
                 # line_num += 1
+                # with timeout
+                ans_dict['System Name'][line_num] = sys_id
+                ans_dict['Observation no.'][line_num] = obs_num
+                ans_dict['Number of Diagnoses'][line_num] = len(diagnosis_ans)
+                ans_dict['Minimal Cardinality'][line_num] = len(diagnosis_ans[0])
+                ans_dict['Maximal Cardinality'][line_num] = len(diagnosis_ans[-1])
+                ans_dict['Runtim e (ms)'][line_num] = '--'
+                line_num += 1
                 print("diagnosis_ans: ", diagnosis_ans)
                 print()
             # diagnos.print_obs()
     data = pd.DataFrame(ans_dict)
-    data.to_csv("output_c17.csv")
+    data.to_csv("output_74181.csv")
 
 def convert_string_to_arr(s):
     s = s.replace('[', '')
@@ -91,17 +91,14 @@ if __name__ == '__main__':
     # lst = ["a", "b", "c"]
     # ans = list(combinations(lst, 2))
     # print(ans)
-    print("*********** system c17 ***********")
-    read_data_system_files('c17')
-    read_data_observation_files('c17')
-    print()
-    # print("*********** system 74181 ***********")
-    # read_data_system_files('74181')
-    # p1 = Process(target=read_data_observation_files('74181'))
-    # p1.start()
-    # p1.join(timeout=120)
-    # p1.terminate()
+    # print("*********** system c17 ***********")
+    # read_data_system_files('c17')
+    # read_data_observation_files('c17')
     # print()
+    print("*********** system 74181 ***********")
+    read_data_system_files('74181')
+    read_data_observation_files('74181')
+    print()
     # print("*********** system 74182 ***********")
     # read_data_system_files('74182')
     # read_data_observation_files('74182')
