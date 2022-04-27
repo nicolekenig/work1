@@ -1,10 +1,9 @@
-from func_timeout import func_set_timeout
 import time
+from itertools import combinations
 
 class diagnosis:
     sys_id = ''
     obs_dict = {}  # key: obs_num, val: obs
-
     def __init__(self, sys_id):
         self.sys_id = sys_id
 
@@ -36,20 +35,12 @@ class diagnosis:
             if not is_healthy:
                 diagnosis.append(s)
                 list_of_gates = self.remove_from_list(s, list_of_gates)
-                for n in s:
-                    to_remove = []
-                    for q in queue:
-                        if n in q:
-                            to_remove.append(q)
-                    for q in to_remove:
-                        queue.remove(q)
 
-            if is_healthy:
-                for gate in list_of_gates:
-                    if gate not in s:
-                        node_to_add = s + [gate]
-                        # visited.append(node_to_add)
-                        queue.append(node_to_add)
+            if len(queue) == 0:
+                size = len(s)+1
+                to_add = list(combinations(list_of_gates, size))
+                if to_add is not s:
+                    queue = queue + to_add
             curr_time = time.time()
             if curr_time > end_time:
                 break
@@ -65,14 +56,30 @@ class diagnosis:
 
     def remove_from_list(self, nodes, list_of_gates):
         for node in nodes:
-            list_of_gates.remove(node)
+            if node in list_of_gates:
+                list_of_gates.remove(node)
         return list_of_gates
 
-    def remove_from_queue(self,nodes,queue):
-        for n in nodes:
-            index_to_remove = []
-            for i in range(len(queue)):
-                if n in queue[i]:
-                    index_to_remove.append(i)
-            for i in index_to_remove:
-                queue.pop(i)
+    def combinationUtil(self,arr,data,start,end,index, r):
+        # Current combination is ready
+        # to be printed, print it
+        if index == r:
+            for j in range(r):
+                print(data[j], end=" ")
+            return
+
+        # replace index with all
+        # possible elements. The
+        # condition "end-i+1 >=
+        # r-index" makes sure that
+        # including one element at
+        # index will make a combination
+        # with remaining elements at
+        # remaining positions
+        i = start
+        while (i <= end and end - i + 1 >= r - index):
+            data[index] = arr[i]
+            self.combinationUtil(arr, data, i + 1,
+                            end, index + 1, r);
+            i += 1
+

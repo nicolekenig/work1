@@ -1,6 +1,4 @@
 from gates.BUFFER import *
-from gates.INVERTER import *
-from gates.multibitAND import *
 from gates.multibitNAND import *
 from gates.multibitNOR import *
 from gates.multibitOR import *
