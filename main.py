@@ -66,8 +66,12 @@ def read_data_observation_files(name_prefix):
                 ans_dict['System Name'][line_num] = sys_id
                 ans_dict['Observation no.'][line_num] = obs_num
                 ans_dict['Number of Diagnoses'][line_num] = len(diagnosis_ans)
-                ans_dict['Minimal Cardinality'][line_num] = len(diagnosis_ans[0])
-                ans_dict['Maximal Cardinality'][line_num] = len(diagnosis_ans[-1])
+                if len(diagnosis_ans) > 0 :
+                    ans_dict['Minimal Cardinality'][line_num] = len(diagnosis_ans[0])
+                    ans_dict['Maximal Cardinality'][line_num] = len(diagnosis_ans[-1])
+                else:
+                    ans_dict['Minimal Cardinality'][line_num] = []
+                    ans_dict['Maximal Cardinality'][line_num] = []
                 ans_dict['Runtim e (ms)'][line_num] = '--'
                 line_num += 1
                 print("diagnosis_ans: ", diagnosis_ans)
